@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moviedb/application/bindings/application_bindings.dart';
 import 'package:moviedb/modules/home/home_module.dart';
 
 Future<void> main() async {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Movie DB',
+      initialBinding: ApplicationBindings(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
