@@ -1,5 +1,9 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:moviedb/modules/home/widgets/line_filters_button.dart';
+import 'package:moviedb/modules/home/widgets/header.dart';
+import 'package:moviedb/modules/home/widgets/movie_banner.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -7,10 +11,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
+        body: SizedBox(
+      width: Get.width,
+      child: ListView(
+        children: [
+          Header(),
+          LineFiltersButton(),
+          MovieBanner(),
+          MovieBanner(),
+        ],
       ),
-      body: Container(),
-    );
+    ));
   }
 }

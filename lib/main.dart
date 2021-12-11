@@ -3,6 +3,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moviedb/application/bindings/application_bindings.dart';
+import 'package:moviedb/application/ui/moviedb_ui_config.dart';
 import 'package:moviedb/modules/home/home_module.dart';
 
 Future<void> main() async {
@@ -17,11 +18,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Movie DB',
+      title: MoviedbUiConfig.title,
       initialBinding: ApplicationBindings(),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: MoviedbUiConfig.theme,
       getPages: [
         ...HomeModule().routers,
       ],
