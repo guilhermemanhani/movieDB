@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moviedb/application/ui/theme_extensions.dart';
+import 'package:moviedb/modules/home/home_controller.dart';
 
-class Header extends StatelessWidget {
+class Header extends GetView<HomeController> {
   const Header({Key? key}) : super(key: key);
 
   @override
@@ -27,6 +28,7 @@ class Header extends StatelessWidget {
               height: 20,
             ),
             TextField(
+              onChanged: (val) => controller.filterName(val),
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderSide: BorderSide.none,

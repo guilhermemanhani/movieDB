@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 mixin MessagesMixin on GetxController {
-  void message(Rxn<MessageModel> message) {
+  void messageListener(Rxn<MessageModel> message) {
     ever<MessageModel?>(message, (model) {
       if (model != null) {
         Get.snackbar(
