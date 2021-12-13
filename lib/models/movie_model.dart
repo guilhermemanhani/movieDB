@@ -7,11 +7,13 @@ class MovieModel {
   final String title;
   final List<int> genres;
   final String posterPath;
+  late String genresString;
   MovieModel({
     required this.id,
     required this.title,
     required this.genres,
     required this.posterPath,
+    this.genresString = '',
   });
 
   MovieModel copyWith({

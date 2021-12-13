@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:moviedb/application/ui/messages/messages_mixin.dart';
+import 'package:moviedb/models/genre_model.dart';
 import 'package:moviedb/models/movie_model.dart';
 import 'package:moviedb/services/movies/movies_service.dart';
 
@@ -12,6 +13,8 @@ class HomeController extends GetxController with MessagesMixin {
 
   final movies = <MovieModel>[].obs;
   var _moviesOriginal = <MovieModel>[];
+  final genres = <GenreModel>[].obs;
+  final genreSelected = Rxn<GenreModel>();
 
   @override
   void onInit() {
@@ -23,24 +26,50 @@ class HomeController extends GetxController with MessagesMixin {
   Future<void> onReady() async {
     super.onReady();
     try {
-      final moviesResult = await _moviesService.getMovies();
+      var moviesResult = await _moviesService.getMovies();
+      final genresResult = await _moviesService.getGenres();
+
+      for (var movie in moviesResult) {
+        for (var movieId in movie.genres) {
+          for (var genreId in genresResult) {
+            if (genreId.id == movieId) {
+              movie.genresString = '${movie.genresString} - ${genreId.name}';
+            }
+          }
+        }
+      }
+
       movies.assignAll(moviesResult);
+      genres.assignAll(genresResult);
       _moviesOriginal = moviesResult;
     } catch (e, s) {
       print(s);
       print(e);
       _message(
-          MessageModel.error(title: 'Erro', message: 'Erro ao buacar filmes'));
+          MessageModel.error(title: 'Erro', message: 'Erro ao buscar na api'));
     }
   }
 
   void filterName(String title) {
     if (title.isNotEmpty) {
-      var filterMovie = _moviesOriginal.where(
+      var filterMovieName = _moviesOriginal.where(
           (movie) => movie.title.toLowerCase().contains(title.toLowerCase()));
-      movies.assignAll(filterMovie);
+      movies.assignAll(filterMovieName);
     } else {
       movies.assignAll(_moviesOriginal);
+    }
+  }
+
+  void filterGenre(GenreModel? genreModel) {
+    if (genreModel?.id == genreSelected.value?.id) {
+      genreModel = null;
+    }
+
+    genreSelected.value = genreModel;
+    if (genreModel != null) {
+      var filterMovieGenre = _moviesOriginal
+          .where((movie) => movie.genres.contains(genreModel?.id));
+      movies.assignAll(filterMovieGenre);
     }
   }
 }

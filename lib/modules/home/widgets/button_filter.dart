@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:moviedb/application/ui/theme_extensions.dart';
+import 'package:moviedb/models/genre_model.dart';
 
 class ButtonFilter extends StatelessWidget {
-  final String genre;
+  final GenreModel genre;
   final bool selected;
   final VoidCallback onPressed;
   const ButtonFilter({
@@ -31,7 +32,7 @@ class ButtonFilter extends StatelessWidget {
           child: Align(
             alignment: Alignment.center,
             child: Text(
-              genre,
+              genre.name,
               style: TextStyle(
                 color: selected ? Colors.white : context.darkBlue,
               ),

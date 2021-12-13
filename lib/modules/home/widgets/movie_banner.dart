@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moviedb/models/movie_model.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class MovieBanner extends StatelessWidget {
   final List<MovieModel> movieModel;
@@ -30,8 +31,10 @@ class MovieBanner extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        'https://image.tmdb.org/t/p/w500/${movieModel[index].posterPath}',
+                      child: FadeInImage.memoryNetwork(
+                        placeholder: kTransparentImage,
+                        image:
+                            'https://image.tmdb.org/t/p/w500/${movieModel[index].posterPath}',
                         fit: BoxFit.fill,
                         width: Get.width,
                       ),
@@ -44,7 +47,7 @@ class MovieBanner extends StatelessWidget {
                         children: [
                           Container(
                             constraints: BoxConstraints(
-                              maxWidth: Get.width * 0.5,
+                              maxWidth: Get.width * 0.6,
                             ),
                             child: Text(
                               movieModel[index].title,
@@ -52,7 +55,7 @@ class MovieBanner extends StatelessWidget {
                               maxLines: 2,
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 16,
                               ),
                             ),
@@ -60,12 +63,19 @@ class MovieBanner extends StatelessWidget {
                           const SizedBox(
                             height: 16,
                           ),
-                          Text(
-                            movieModel[index].genres.toString(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 10,
+                          Container(
+                            constraints: BoxConstraints(
+                              maxWidth: Get.width * 0.6,
+                            ),
+                            child: Text(
+                              movieModel[index].genresString,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 11,
+                              ),
                             ),
                           ),
                         ],

@@ -1,3 +1,4 @@
+import 'package:moviedb/models/genre_model.dart';
 import 'package:moviedb/models/movie_model.dart';
 import 'package:moviedb/repositories/movies/movies_repository.dart';
 
@@ -11,4 +12,7 @@ class MoviesServiceImpl implements MoviesService {
 
   @override
   Future<List<MovieModel>> getMovies() => _moviesRepository.getMovies();
+
+  @override
+  Future<List<GenreModel>> getGenres() => _moviesRepository.getGenres();
 }
