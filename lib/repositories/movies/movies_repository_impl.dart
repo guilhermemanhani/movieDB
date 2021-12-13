@@ -7,8 +7,9 @@ import './movies_repository.dart';
 
 class MoviesRepositoryImpl implements MoviesRepository {
   final RestClient _restClient;
-  MoviesRepositoryImpl({required RestClient restClient})
-      : _restClient = restClient;
+  MoviesRepositoryImpl({
+    required RestClient restClient,
+  }) : _restClient = restClient;
   @override
   Future<List<MovieModel>> getMovies() async {
     final result = await _restClient.get<List<MovieModel>>(

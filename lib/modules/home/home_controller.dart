@@ -29,15 +29,7 @@ class HomeController extends GetxController with MessagesMixin {
       var moviesResult = await _moviesService.getMovies();
       final genresResult = await _moviesService.getGenres();
 
-      for (var movie in moviesResult) {
-        for (var movieId in movie.genres) {
-          for (var genreId in genresResult) {
-            if (genreId.id == movieId) {
-              movie.genresString = '${movie.genresString} - ${genreId.name}';
-            }
-          }
-        }
-      }
+      translateGenres(moviesResult, genresResult);
 
       movies.assignAll(moviesResult);
       genres.assignAll(genresResult);
@@ -47,6 +39,19 @@ class HomeController extends GetxController with MessagesMixin {
       print(e);
       _message(
           MessageModel.error(title: 'Erro', message: 'Erro ao buscar na api'));
+    }
+  }
+
+  void translateGenres(
+      List<MovieModel> moviesResult, List<GenreModel> genresResult) {
+    for (var movie in moviesResult) {
+      for (var movieId in movie.genres) {
+        for (var genreId in genresResult) {
+          if (genreId.id == movieId) {
+            movie.genresString = '${movie.genresString} - ${genreId.name}';
+          }
+        }
+      }
     }
   }
 
