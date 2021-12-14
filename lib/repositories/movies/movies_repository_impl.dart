@@ -1,6 +1,7 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:moviedb/application/rest_client/rest_client.dart';
 import 'package:moviedb/models/genre_model.dart';
+import 'package:moviedb/models/movie_detail_model.dart';
 import 'package:moviedb/models/movie_model.dart';
 
 import './movies_repository.dart';
@@ -61,5 +62,26 @@ class MoviesRepositoryImpl implements MoviesRepository {
     }
 
     return result.body ?? <GenreModel>[];
+  }
+
+  @override
+  Future<MovieDetailModel?> getDetail(int id) async {
+    final result = await _restClient.get<MovieDetailModel?>(
+      '/movie/$id',
+      query: {
+        'api_key': RemoteConfig.instance.getString('api_token'),
+        'language': 'pt-br',
+        'append_to_response': 'credits',
+      },
+      decoder: (data) {
+        return MovieDetailModel.fromMap(data);
+      },
+    );
+
+    if (result.hasError) {
+      throw Exception('Erro ao buscar detalhe do filme');
+    }
+
+    return result.body;
   }
 }
