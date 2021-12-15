@@ -83,7 +83,7 @@ class MovieDetailModel {
 
   factory MovieDetailModel.fromMap(Map<String, dynamic> map) {
     return MovieDetailModel(
-      backdropPath: map['backdrop_path'] ?? '',
+      backdropPath: 'https://image.tmdb.org/t/p/w500/${map['backdrop_path']}',
       voteAverage: map['vote_average']?.toDouble() ?? 0.0,
       title: map['title'] ?? '',
       originalTitle: map['original_title'] ?? '',
